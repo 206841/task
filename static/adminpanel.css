@@ -1,0 +1,22 @@
+.bgimg{
+    background-image: url("https://img.freepik.com/free-vector/add-tasks-concept-illustration_114360-4765.jpg?w=740&t=st=1672400049~exp=1672400649~hmac=dc8e7ab3258c19efcd84c59491e0c996968fd65a39c67b4f42758d4e920f60f7");
+    width: 100vw;
+    height:100vh;
+    background-size: cover,contain;
+
+}
+.iconsb{
+    
+        background-color:rgb(64, 64, 200);
+        color: white;
+        border-radius:25px;
+        border-width: 0px;
+        width:250px;
+        padding: 10px;
+        font-size:25px; 
+        margin-top:35px;
+        
+}
+.iconsb:hover{
+    width:280px;
+}
