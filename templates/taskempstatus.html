@@ -12,7 +12,7 @@
     <div class=" conts text-center ml-3 mr-3 col-12 col-lg-6">
     <center>
     <p>Task status<i class="fa-solid fa-plus ml-2"></i></a></p>
-    <form method="POST" action="{{url_for('choose')}}">
+    <form method="POST" ">
             <div class="modal-body">
               <div class="form-group ">
                 <label for="exampleFormControlSelect1">Select</label>
@@ -24,24 +24,10 @@
                 </select>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Ok</button>
-            </div>
-    
-        <label for="date"><i class="fa-duotone fa-timer"></i>Submitted On:</label>
-        <input type="date" id="tasks" name="birth" >
         <div class="mb-2 mt-2">
-        <h6 >Notes</h6>
-        <small>
-            <ul>
-            <li>Must contain images and tables.</li>
-            <li>At least it should be 5 pages.</li>
-            </ul>
-        </small>
             <textarea class="form-control mt-3" rows="3" id="comment" name="text" placeholder="Submit task in doc form"></textarea>                            
         </div>
-        <label for="date">Due Date:</label>
-        <input type="date" id="tasks" name="birth" ></form><br>
+        <button>Ok</button>
     </form>
    </div>
 </div>

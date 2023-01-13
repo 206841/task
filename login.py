@@ -23,37 +23,6 @@ mydb=mysql.connector.connect(
     db='task'
     )
 Session(app)
-
-
-'''def background_task():
-    with app.app_context():
-        while True:
-            cursor=mydb.cursor()
-            cursor.execute('select id,date from task')
-            task=cursor.fetchall()
-            #print(data)
-            if len(task)==0:
-                pass
-            else:
-                for i in task:
-                    today=date.today()
-                    current_date=datetime.strptime(f'{str(today.day)}-{str(today.month)}-{str(today.year)}','%d-%m-%Y')
-                    due_date=i[1]
-                    due_date1=datetime.strptime(f'{str(due_date.day)}-{str(due_date.month)}-{str(due_date.year)}','%d-%m-%Y')
-                    
-                    mydb.commit()
-                    subject=f'remainding task '
-                    body=f'you are not submited today is the last date {id1[3]}\n\n\n submit task!'
-                    cursor.close()
-                    try:
-                        mail_sender(email_from,email,subject,body,passcode)
-                    except Exception as e:
-                        print(e)
-                        return render_template('check2.html')'''
-                        
-
-
-        #print(cursor.fetchall())'''
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -79,7 +48,7 @@ def create():
             return render_template('adminlogin.html')
         else:
             cursor=mydb.cursor()
-            cursor.execute('insert into admin values(%s,%s,%s,%s)',[user,password,admin_email,passcode])
+            cursor.execute('insert into admin values(%s,%s,%s,%s)',[user,password,passcode,admin_email])
             mydb.commit()
             return redirect(url_for('home'))
     return render_template('create.html')
@@ -222,8 +191,29 @@ def addtask():
         print(id2)
         
         cursor.execute('insert into task(id,name,assigning,status,assign_to,date) values(%s,%s,%s,%s,%s,%s)',[id1,name,id2,'NOT STARTED',assign_to,duedate])
+        cursor=mydb.cursor(buffered=True)
+        
+        cursor.execute('SELECT PASSCODE from admin')
+        passcode=cursor.fetchone()[0]
+        cursor.execute('SELECT admin_email from admin')
+        email_from=cursor.fetchone()[0]
+        
+        
+        
+        
+        cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
+        email_to=cursor.fetchone()[0]
         mydb.commit()
+        subject=f'Task is updated'
+        body=f'\nYou completed the task with in time'
         cursor.close()
+        
+        try:
+            mail_sender(email_from,email_to,subject,body,passcode)
+            print(mail_sender)
+        except Exception as e:
+            print(e)
+        
         return redirect(url_for('adminpanel'))
     return render_template('addtask.html')
 @app.route('/viewtask')
@@ -233,14 +223,7 @@ def view():
     tasks=cursor.fetchall()
     cursor.close()
     return render_template('alltasktable.html',tasks=tasks)
-@app.route('/viewtask1')
-def view1():
-    cursor=mydbcursor()
-    cursor.execute('SELECT * from task order by date')
-    tasks=cursor.fetchall()
-    cursor.close()
-    return render_template('table1.html',tasks=tasks)
-        
+
 @app.route('/forgetpassword',methods=['GET','POST'])
 def password():
     if request.method=='POST':
@@ -258,6 +241,21 @@ def password():
         else:
             return redirect(url_for('password'))
     return render_template('secret.html')
+@app.route('/changestatus/<tid>',methods=['GET','POST'])
+def changestatus(tid):
+    if request.method=='POST':
+        option=request.form['option']
+        comment=request.form['text']
+        cursor=mydb.cursor()
+        
+        cursor.execute('update task set status=%s,comment=%s where id=%s',[option,comment,tid])
+        return redirect(url_for('taskemployee'))
+        mydb.commit()
+        
+    
+    return render_template('taskempstatus.html')
+
+    
 @app.route('/password1',methods=['GET','POST'])
 def password1():
     if request.method=='POST':
@@ -308,24 +306,27 @@ def update(id1):
         cursor.execute('SELECT admin_email from admin')
         email_from=cursor.fetchone()[0]
         
+        
         cursor.execute('update task set name=%s,date=%s,assign_to=%s where id=%s',[name2,date2,assign_to2,id1])
+        
+        
+        cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
+        email_to=cursor.fetchone()[0]
         mydb.commit()
-        
-        
         subject=f'Task is updated'
         body=f'\nYou completed the task with in time'
         cursor.close()
         
         try:
-            mail_sender(email_from,subject,body,passcode)
+            mail_sender(email_from,email_to,subject,body,passcode)
             print(mail_sender)
         except Exception as e:
             print(e)
-            #return render_template('check.html')
+            return render_template('check.html')
         return redirect(url_for('adminpanel'))
     
     return render_template('update.html',name=name,assign_to=assign_to,date=date,id1=id1)
-
-app.run(debug=True)
+if __name__ == "__main__":
+        app.run(debug=True)
 
 

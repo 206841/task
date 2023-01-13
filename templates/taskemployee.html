@@ -17,7 +17,7 @@
                 <li><a href="#reachus">Mail to Admin</a></li>
                 <li><a href="#team members">Our Team</a></li>
                 <li><a href="#help">Help</a></li>
-                <li><a href="logout">Logout</a></li>
+                <li><a href="{{url_for('logout')}}">Logout</a></li>
             </ul>
         </nav>
    </div>
@@ -26,25 +26,23 @@
     <div id="menuBtn" class="col-12">
         <img src="https://www.shutterstock.com/image-vector/menu-icon-web-600w-1409803673.jpg" id="menu">
         </div>
-        <div id="menuBtn" class="col-12">
-            <img src="https://www.shutterstock.com/image-vector/menu-icon-web-600w-1409803673.jpg" id="menu">
-            </div>          
+          
             <script>
                 
                 var menuBtn = document.getElementById("menuBtn")
                 var sideNav = document.getElementById("sideNav")
                 var menu = document.getElementById("menu")
     
-                sideNav.style.left = "-250px";
+                sideNav.style.left = "-800px";
     
     
                 menuBtn.onclick = function(){
-                    if(sideNav.style.left=="-250px"){
+                    if(sideNav.style.left=="-800px"){
                         sideNav.style.left="0";
                         menu.src = "https://www.shutterstock.com/image-vector/cancel-vector-icon-x-deny-600w-1935766258.jpg";
                     }
                     else{
-                        sideNav.style.left ="-250px";
+                        sideNav.style.left ="-800px";
                         menu.src = "https://www.shutterstock.com/image-vector/menu-icon-web-600w-1409803673.jpg";
     
                     }
@@ -64,10 +62,9 @@
                            <h6>{{i[0]}}</h6>
                            <h6>{{i[1]}}</h6>
                            <h6>{{i[2]}}</h6>
-                           <h6>{{i[4]}}</h6>
+                           <h6><a href='{{url_for("changestatus",tid=i[0])}}'>{{i[4]}}</a></h6>
                            <h6>{{i[3]}}</h6>
-                           
-                           
+                           <h6>{{i[6]}}</h6>                                               
                         </div>
                     {% endfor %}
                        </div>
