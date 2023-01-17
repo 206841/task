@@ -51,6 +51,7 @@ def create():
 
 @app.route('/validation',methods=['POST'])
 def validation():
+    
     if request.method=="POST":
         print(request.form)
         user=request.form['user']
