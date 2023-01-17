@@ -49,7 +49,7 @@ def create():
             return redirect(url_for('home'))
     return render_template('create.html')
 
-@app.route('/validation',methods=['POST'])
+@app.route('/validation',methods=['GET','POST'])
 def validation():
     
     if request.method=="POST":
