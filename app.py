@@ -51,11 +51,12 @@ def create():
 
 @app.route('/validation',methods=['GET','POST'])
 def validation():
-    
+        
     if request.method=="POST":
-        print(request.form)
-        user=request.form['user']
         user=session['id']
+        print(request.form)
+        
+        user=request.form['user']
         cursor=mydb.cursor()
         cursor.execute('SELECT username from admin')
         users=cursor.fetchall()            
@@ -73,10 +74,10 @@ def validation():
                 return redirect(url_for('adminpanel'))
             else:
                 flash('Invalid Password')
-                return redirect(url_for('login'))
+                return render_template('adminlogin.html')
         else:
             flash('Invalid user id')
-            return redirect(url_for('login'))
+            return render_template('adminlogin.html')
 @app.route('/adminlogout')
 def logoutadmin():
     session.pop('id',None)

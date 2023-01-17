@@ -20,12 +20,15 @@
             var lastNameCheck=/^[a-zA-Z ]+$/
             var emailCheck=/^[A-Za-z0-9.#]+@[a-z]+\.[a-z]{2,3}$/
             var phoneNumberCheck=/^[6-9]\d{9}$/
-            var employeeIdCheck=/^[0-9]/
+            var employeeIdCheck=/^[0-9]{6}/
            if(employeeid==""){
                 alert("Employee-id is mandatory")
                 return false
            }
-          
+           if(!employeeid.match(employeeIdCheck)){
+                alert("Id must contain digits")
+                return false
+            }
            if(firstname=="" |firstname.length<3){
                 alert("Please enter your name")
                 return false
