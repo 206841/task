@@ -17,7 +17,7 @@ header{
     padding: 50px 100px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 header ul li{
     list-style: none;
@@ -30,6 +30,7 @@ header ul li a{
     text-decoration: none;
     letter-spacing: 1px;
     transition: all ease 0.5s;
+    margin-right: 150px;
 }
 header ul li a:hover{
     color: #f09053;
@@ -42,14 +43,31 @@ header ul li a.btn{
     background-color: #f09053;
     color: #fff;
     text-align: center;
-    font-size: 18px;
     border-radius: 50px;
     transition: all ease 0.5s;
 }
 header ul li a.btn:hover{
     background-color: #615c59;
 }
-
+.boxin h2{
+    color:#000;
+    font-size: 2em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px #f09053,
+    0 0 20px #f09053,
+    0 0 40px #f09053,
+    0 0 60px #f09053;
+    animation: animatedance 3s linear infinite;
+}
+@keyframes animatedance{
+    0%,3%{
+        transform:scaleY(0) translateX(0);
+    }
+    5%{
+        transform:scaleY(1) translateX(0)
+    }
+}
 .content{
     display: flex;
     flex-wrap: wrap;
@@ -61,12 +79,39 @@ header ul li a.btn:hover{
     padding-right: 150px;
 }
 .text p{
-    font-size: 28px;
-    line-height: 30px;
+    font-size: 23px;
+    line-height: 20px;
     color:black;
 }
-.text p span{
+.lets{
+    color: #fff;
+    position: relative;
+    -webkit-text-stroke:0.1vw #ece8e6;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-top: 25px;
+
+}
+.lets::before{
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
     color: #f09053;
+    -webkit-text-stroke: 0vw #ebe4e0;
+    border-right: 2px solid #f09053;
+    overflow: hidden;
+    animation: animate 6s linear infinite;   
+}
+@keyframes animate{
+    0%,10%,100%{
+        width: 0;
+    }
+    70%,90%{
+        width: 100%;
+    }
 }
 .text a{
     position: relative;
@@ -230,7 +275,6 @@ ul ul li a:hover{
     right:0;
     border-radius: 80px;
     border:0;
-    font-size: 20px;
     padding: 15px 40px;
     color: black;
     background: #f09053;

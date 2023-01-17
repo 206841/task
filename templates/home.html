@@ -7,6 +7,18 @@
     <title>Landing Page Design With Animation Using Only HTML & CSS | Waves Animation, Dropdown Menu, Multiple Circle Rotation</title>
     <link rel="stylesheet" href="{{url_for('static',filename='sub1.css')}}">
     <script src="https://kit.fontawesome.com/88b5890a21.js" crossorigin="anonymous"></script>
+<style>
+     @import url('https://fonts.googleapis.com/css2?family=Allura&family=Dancing+Script&family=Josefin+Sans:ital,wght@1,300&family=Moon+Dance&display=swap');
+     .enterp{
+ 
+            font-family: 'Josefin Sans', sans-serif;
+            font-size:20px
+        }
+        .dance{
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 25px;
+        }
+</style>
 </head>
 <body>
 
@@ -16,6 +28,12 @@
 
         <nav>
             <ul>
+                <li>
+                    <div class="boxin">
+                        <h2 class="dance">T.M.S</h2>
+                    </div>
+                </li>
+                <li><a class="box" href="#"><input class="calender" type="date"/>Calender</a></li>
                 <li><a href="#">Integration</a>
                     <ul>
                         <li><a href="#">Java</a></li>
@@ -23,21 +41,17 @@
                         <li><a href="#">React</a></li>
                         <li><a href="#">Python</a></li>
                         <li><a href="#">Machine Learning</a></li>
-                        <li><a href="#">Artificial Intelligence</a></li>
                     </ul>
                 </li>
                 
-                <li><a class="box" href="#"><input class="calender" type="date"/>Calender</a></li>
-                
-                <a href="{{url_for('create1')}}"><button class="enterp">Sign Up</button></a>
+                <a href="{{url_for('create1')}}"><button class="enterp">Register Here</button></a>
             </ul>
         </nav>
     </header>
-
-    <div class="content">
+   <div class="content">
         <div class="text">
             <p>Skills and techniques that managers use to keep employees organized ,orderly,focused,attentive,on task,and productive.</p>
-            <p><span>Let's Grow together!!</span></p>
+            <h2 class="lets" data-text="Let's Grow Together!!">Let's Grow together!!</h2>
             <a href="{{url_for('employeelogin')}}"><p class="btn">Login</p></a>
         </div>
         <div class="img">

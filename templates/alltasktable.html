@@ -12,16 +12,49 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{{url_for('static',filename='login.css')}}" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Allura&family=Dancing+Script&family=Josefin+Sans:ital,wght@1,300&family=Moon+Dance&display=swap');
+      .center{
+        margin-left: auto;
+        margin-right: auto;
+        font-family: 'Josefin Sans', sans-serif;
+        font-weight: bold;
+      }
+      th{
+        font-size: 25px;
+      }
+      .push{
+        font-family: 'Moon Dance', cursive;
+      font-size: 40px
+      }
+      body{
+        background-image: url("https://img.freepik.com/premium-vector/background-white-elegant-texture_23-2148438404.jpg?w=1060");
+      }
+      table,th,td{
+            border:solid 1px;
+            border-collapse: collapse;
+      }
+        td,th{
+            text-align: center;
+        }
+        td:hover{background-color:rgb(134, 133, 133)}
+        tr:nth-child(odd){background-color:rgb(198, 195, 195)}
+    </style>
 </head>
 <body>
-  
+  <div class="modal-footer">
+    <a href="{{url_for('adminpanel')}}" class="btn btn-primary mt-3" style="margin-right:150px;">back</a>
+ </div>
+ <center class="push">
+  All Task particulars
+ </center>
     <form class="form-inline" method="post" >
        
     
   
   {% block content %}
     <div class="table text-center mt-4 ml-4">
-    <table border="1px" cellpadding="20px" cellspacing="0px">
+    <table border="1px" class="center" cellpadding="20px" cellspacing="0px">
         <tr>
                  <th> ID</th>
                  <th>Name</th>
@@ -48,9 +81,6 @@
         </tr>
         {% endfor %}
     </table>
-    <div align=text-center>
-        <a href="{{url_for('adminpanel')}}" class="btn btn-primary mt-3" style="margin-left:150px;">back</a>
-     </div>
 </div>
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"

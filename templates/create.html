@@ -4,59 +4,106 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LBMS</title>
+    <title>employeesignup</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='employeesign.css')}}">
+    <script src="https://kit.fontawesome.com/88b5890a21.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/88b5890a21.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{url_for('static',filename='login.css')}}">
+    <script>
+        function validate(){
+            var firstname=document.getElementById("firstname").value
+            var adminemail=document.getElementById("adminemail").value
+            var pkey=document.getElementById("pkey").value
+            var firstNameCheck=/^[a-zA-Z ]+$/
+            var adminEmailCheck=/^[A-Za-z0-9.#]+@[a-z]+\.[a-z]{2,3}$/
+           if(firstname=="" |firstname.length<3){
+                alert("Please enter your name")
+                return false
+            }
+            if(!firstname.match(firstNameCheck)){
+                alert("Name must carry only characters")
+                return false
+            }
+            if(adminemail==""){
+                alert("Email id is mandatory");
+                return false
+            }
+            if(!adminemail.match(adminEmailCheck)){
+                alert("Please check your mail format");
+                return false
+            }
+            if(password==""){
+                alert("Please enter password")
+                return false
+            }
+            if(pkey==""){
+                alert("Please enter passcode")
+                return false
+            }
+        return true
+        }
+    </script>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Allura&family=Dancing+Script&family=Josefin+Sans:ital,wght@1,300&family=Moon+Dance&display=swap');
+        h1{
+        font-family: 'Moon Dance', cursive;
+        font-size: 50px;
+        }
+        h2{
+            font-family: 'Moon Dance', cursive;
+            font-size: 40px;
+        } 
+        input{
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 25px;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body>
-    <form method="POST">
-    <div class="container d-flex flex-row justify-content-center">
-        <div class="row">
-          <div class="col-12" style="margin-top:50%; border:black 2px solid; padding: 40px; border-radius:8px;">
-            <div class="form-group">
-                <label for="firstName" class="col-12 control-label" style="font-weight:bold;">Secret Key</label>
-                <div class="col-12">
-                    <input type="password" id="firstName" placeholder="Enter Your Secret Key" name="key" class="form-control" autofocus>
-                </div>
-            </div>
-            <div id="validate_name"></div><br/>
-
-            <div class="form-group">
-                <label for="firstName" class="col-12 control-label" style="font-weight:bold;">Username</label>
-                <div class="col-12">
-                    <input type="text" id="quali" name="user" placeholder="Enter Username" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="firstName" class="col-12 control-label" style="font-weight:bold;">Password</label>
-                <div class="col-12">
-                    <input type="password" id="quali" name="password" placeholder="Enter Your Password"class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="firstName" class="col-12 control-label" style="font-weight:bold;">email</label>
-                <div class="col-12">
-                    <input type="email" id="quali" name="admin_email" placeholder="Enter Your email"  class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="firstName" class="col-12 control-label" style="font-weight:bold;">passcode</label>
-                <div class="col-12">
-                    <input type="password" id="quali" name="p_key" placeholder="Enter Your passcode"  class="form-control">
-                </div>
-            </div>
-            <div id="validate_quali"></div><br/>
+<body class="cest">
+    <center>
+        <h1 class="text-center pt-3 pb-4" style=" color:black;">Register Here</h1>
+        </center>
+<div class="emplog text-center">
+    <div class="row">
+<div class="col-12 col-lg-6">
+<img src="https://web.classplusapp.com/static/media/loginCover.c813756b.svg" class="col-12" alt="">
+</div>
+    <div class="container container d-flex flex-row justify-content-center col-12 col-lg-6">
+        <div class="drop col-12">
+            <div class="content col-12">
+                <h2 class="mt-2"><i class="fa-solid fa-address-card mr-2" style="color: rgb(25, 77, 189)"></i>Sign-in</h2>
+                <div class="col-12 col-lg-6">                
+                <form class="col-12" method="POST" onsubmit="return validate()" >
+<div class="inputBox">
+    <input type="text" placeholder="Secret-key" name="key">
+</div>
+<div class="inputBox">
+    <input type="text" placeholder="username" name="user" id="firstname">
+</div>
+<div class="inputBox">
+    <input type="text" placeholder="admin_email" name="admin_email" id="adminemail">
     </div>
+<div class="inputBox">
+    <input type="text" placeholder="password" name="password">
 </div>
+<div class="inputBox">
+    <input type="text" placeholder="passcode" name="p_key" id="pkey">
+</div>
+<div class="inputBox">
+    <a href="{{url_for('home')}}"><input type="submit" value="Submit" >
 
+    </a>
 </div>
-<div class="col-12 text-center" style="margin-top:10px;">
-    <button class="btn btn-primary"> Submit </button>
-    <a href="{{url_for('login')}}">Back</a>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
 </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-</form>
+<script src="http s://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>   
 </body>
 </html>
+

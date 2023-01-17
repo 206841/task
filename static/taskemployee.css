@@ -1,10 +1,12 @@
+
 *{
     margin:0;
     padding:0;
 }
-body{
-    background-image: url("https://cdn.dribbble.com/users/31664/screenshots/1738665/hands-test-2.gif");
+.papa{
+    background:url("https://img.freepik.com/premium-photo/abstract-background-bokeh-circle-light-blueabstract-blue-effect-backgroundlight-blue-background_537132-544.jpg?w=1380");
     background-size: cover;
+    background-repeat: no-repeat;
 }
 .taskmanage h1{
     background-color: #e5eaf4;
@@ -14,6 +16,7 @@ body{
     border-radius: 7px;
     color: #000;
     text-decoration: none;
+    position:absolute
 }
 .taskmanage #pick h1,h6,:hover{
     text-decoration: none;
@@ -127,3 +130,5 @@ nav ul li:hover{
 .conts{
     background-color: #666666;
 }
+
+

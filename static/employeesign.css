@@ -5,8 +5,11 @@
     font-family: 'Nerko One', cursive;
     box-sizing: border-box;
 }
-body{
-    background-color:rgb(160, 219, 242);
+.cest{
+    background-image: url("https://img.freepik.com/free-vector/watercolor-background_87374-69.jpg?w=1060&t=st=1673379047~exp=1673379647~hmac=7165f8ca77ea9be3de34f32bd1f8e5f5279fc63e423a08f5f832a9dc5024bed4");
+    background-size: contain;
+    
+    
 }
 
 .emplog{
@@ -27,8 +30,8 @@ min-height: 100vh;
 }
 .container .drop{
 position: relative;
-width: 393px;
-height: 422px;
+width: 450px;
+height: 500px;
 box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.08), 25px 35px 20px rgba(0,0,0,0.05), 25px 30px 30px rgba(0,0,0,0.05), inset -20px -20px 25px rgba(255,255,255,0.9);
 transition: 0.5s;
 display: flex;

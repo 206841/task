@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Dancing+Script&family=Josefin+Sans:ital,wght@1,300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+body{
+    background-color: rgb(225, 237, 237);
+}
+.wrapper{
+   background: linear-gradient(45deg,whitesmoke,skyblue,rgb(108, 108, 204));
+   background-size: cover; 
+}
+.wrapper{
+    margin-top: 10%;
+}
+.wrapper h1{
+    font-family: 'Allura', cursive;
+    font-size: 52px;
+    margin-bottom: 60Px;
+    text-align: center;
+}
+.team{
+    display: flex;
+    text-align: center;
+    width: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.team .team_member{
+    background: white;
+    margin: 5px;
+    margin-bottom: 50px;
+    width:300px;
+    padding:20px;
+    box-shadow: 0px 15px 20px #8e8b8b;
+    line-height: 20px;
+    position: relative;
+}
+.team .team_member h3{
+    color:red;
+    font-size: 26px;
+    margin-top: 50px;
+}
+.team .team_member p.role{
+    color:rgb(30, 29, 29);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin:12px 0;
+}
+.team_img img{
+    border-radius: 50% 50%;
+    height: 100px;
+    width: 100px;
+
+
+}
+.team .team_member .team_img{
+    border-radius: 50% 50%;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top:-50px;
+    left:50%;
+    transform:translate(-50%);
+    margin-bottom: 25px;
+}
+.team_member:hover{
+    transform: translateY(-10px);
+}

@@ -7,11 +7,7 @@ from email.message import EmailMessage
 import smtplib
 
 
-'''
-app.config['MYSQL_DATABASE_HOST'] ='localhost'
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD']='anurupa@2002'
-app.config['MYSQL_DATABASE_DB']='LIBRARY'''
+
 app=Flask(__name__)
 app.secret_key='jgjyfjmgjhymgfnb'
 app.config['SESSION_TYPE']='filesystem'
@@ -55,7 +51,6 @@ def create():
 
 @app.route('/validation',methods=['POST'])
 def validation():
-    
     if request.method=="POST":
         print(request.form)
         user=request.form['user']
@@ -138,9 +133,11 @@ def taskemployee():
         
         return render_template('taskemployee.html',id1=id1,task=tasks)
     return redirect(url_for('employeelogin'))
+@app.route('/taskemploye')
+def ourteam():
+    return render_template('ourteam.html')
 @app.route('/employeelogin',methods=['GET','POST'])
 def employeelogin():
-    
     if request.method=="POST":
         email=request.form['email']
         cursor=mydb.cursor()
@@ -166,7 +163,21 @@ def employeelogin():
 def logout():
     session.pop('email',None)
     return redirect(url_for('home'))
-         
+@app.route('/addsuggestion',methods=['GET','POST'])
+def suggestions():
+    cursor=mydb.cursor()
+    cursor.execute('SELECT * from announcements')
+    suggestions=cursor.fetchall()
+    if request.method=="POST":
+        emp_id=request.form['id']
+        name=request.form['name']
+        field=request.form['field']
+        announcement=request.form['text']
+        cursor=mydb.cursor()
+        cursor.execute('INSERT INTO announcements values(%s,%s,%s,%s)',[emp_id,name,field,announcement])
+        mydb.commit()
+        return render_template('announcements.html',suggestions=suggestions)
+    return render_template('announcements.html')
     
 @app.route('/delete',methods=['POST'])
 def delete():

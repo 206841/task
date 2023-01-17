@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url_for('static',filename='review.css')}}"/>
+        <style>
+        .review-container {
+            border-radius:5 px;
+            border-style: solid;
+            border-width:1px;
+            padding:10px;
+            width:50%;
+            font-family:"Robotics";
+            font-weight:700;
+            box-shadow: inset;
+            margin:250px;
+            margin-left:400px;
+        }
+        .pure{
+            border-radius: 5px;
+            border-width: 1px;
+            padding: 10px;
+            width:50%;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 800;
+            margin-top:5%;
+            margin-left:25%;
+        
+        }
+        body{
+            background: linear-gradient(45deg,white,rgb(188, 221, 234));
+        }
+    </style>
+</head>
+        <body>
+            <div class="tablein text-center mt-4 ml-4">
+                <table border="1px" cellpadding="20px" cellspacing="0px" class="pure">
+                    <tr>
+                             <th>id</th>
+                             <th>name</th>
+                             <th>field</th>
+                             <th>announcement</th>
+                        
+                    </tr>
+                    {% for i in suggestions %}
+                    <tr>
+                            <td>{{i[0]}}</td>
+                            <td>{{i[1]}}</td>
+                            <td>{{i[2]}}</td>
+                            <td>{{i[3]}}</td>
+                    {% endfor %}
+                </table>
+            </div>
+                <div class="review-container text-center">
+                    <form method="POST" action="{{url_for('suggestions')}}">
+                        <label for="studentid">Employee ID</label>
+                        <input type="text" id="fname" name="id" class="m-2"/><br>
+                        <label for="sectioln">Name</label>
+                        <input type="text" id="lname" name="name" class="m-2"/><br>
+                        <label for="sectioln">Field</label>
+                        <input type="text" id="lname" name="field" class="m-2"/><br>
+        `                <div class="container mt-3">
+                              <div class="mb-3 mt-3">
+                                <label for="Feedback" class="m-2">Announcement</label>
+                                <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <a href="{{url_for('home')}}"><button type="submit" class="btn btn-primary">Back</button></a>
+                            </div>       
+                </div> 
+                <script src="http s://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script> 
+        </body>
+</html>
+
+

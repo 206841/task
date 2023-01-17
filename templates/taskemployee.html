@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>4
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,27 +8,73 @@
     <title>Document</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/88b5890a21.js" crossorigin="anonymous"></script>
+        <style>
+            @import url("https://fonts.googleapis.com/css?family=Montserrat:700");
+            
+            * {
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: Montserrat, sans-serif;
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+            }
+            .wrapper  {
+                position: relative;
+            }
+            #sideNav{
+                position:absolute;
+            }
+            .hero {
+                min-height: 100vh;
+                padding: clamp(1rem, 2vw, 5rem);
+                display: flex;
+                align-items: center;
+            }
+            
+            .hero--secondary {
+                --mask: radial-gradient(circle at var(--x, 70%) var(--y, 50%), black 25%, transparent 0);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, #40e0d0, #9932cc, #ff1493, orange);
+
+                -webkit-mask-image: var(--mask);
+                mask-image: var(--mask);
+            }
+            .hero__heading {
+            font-size: clamp(2rem, 5vw, 8rem);
+            text-transform: uppercase;
+            margin: 0;
+            background-color: #FFE53B;
+            background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+            -webkit-background-clip: text;
+            color: transparent;
+                    }
+               </style>
 </head>
-<body>
+<body class="papa">
     <div id="sideNav">
         <nav>
             <ul>
-                <li><a href="#announcements">Announcements</a></li>
+                <li><a href="{{url_for('suggestions')}}">Announcements</a></li>
                 <li><a href="#reachus">Mail to Admin</a></li>
-                <li><a href="#team members">Our Team</a></li>
-                <li><a href="#help">Help</a></li>
+                <li><a href="{{url_for('ourteam')}}">Our Team</a></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
             </ul>
         </nav>
    </div>
     
                  
-    <div id="menuBtn" class="col-12">
+        <div id="menuBtn" class="col-12">
         <img src="https://www.shutterstock.com/image-vector/menu-icon-web-600w-1409803673.jpg" id="menu">
-        </div>
-          
-            <script>
-                
+        </div>         
+            <script>     
                 var menuBtn = document.getElementById("menuBtn")
                 var sideNav = document.getElementById("sideNav")
                 var menu = document.getElementById("menu")
@@ -47,35 +93,51 @@
     
                     }
                 }
-            </script> 
-    <div id="serviceSection">
+                </script>    
         <div class="bgimg2 pt-5 pb-5">
-           <div class="container col-12 col-lg-8">
-               <div class="row">
-                   <div class="col-12 col-md-4">
-                       <div class="cardsi p-3">
-                        <h1 class="chead"> {{id1}}</h1>
-                        <h2 class="chead">{{firstName}} {{lastname}}</h2>
-                        <a href="taskempstatus.html"></a>
-                     {% for i in task %}
-                        <div class="taskmanage">
-                           <h6>{{i[0]}}</h6>
-                           <h6>{{i[1]}}</h6>
-                           <h6>{{i[2]}}</h6>
-                           <h6><a href='{{url_for("changestatus",tid=i[0])}}'>{{i[4]}}</a></h6>
-                           <h6>{{i[3]}}</h6>
-                           <h6>{{i[6]}}</h6>                                               
-                        </div>
-                    {% endfor %}
-                       </div>
-                   </div>
-                   
-                           
-               </div>
-           </div>
-        </div>
-    </div>
-       
+                <div class="container col-12 col-lg-8">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="cardsi p-3">
+                             <h1 class="chead"> {{id1}}</h1>
+                             <h2 class="chead">{{firstName}} {{lastname}}</h2>
+                             <a href="taskempstatus.html"></a>
+                          {% for i in task %}
+                             <div class="taskmanage">
+                                <h6>{{i[0]}}</h6>
+                                <h6>{{i[1]}}</h6>
+                                <h6>{{i[2]}}</h6>
+                                <h6><a href='{{url_for("changestatus",tid=i[0])}}'>{{i[4]}}</a></h6>
+                                <h6>{{i[3]}}</h6>
+                                <h6>{{i[6]}}</h6>      
+                             </div>
+                         {% endfor %}
+                            </div>
+                        </div>              
+                    </div>
+                </div>
+             </div> 
+             <div class="wrapper">
+                <div class="hero">
+                    <h1 class="hero__heading">TASK MANAGEMENT SYSTEM</h1><br/>
+                </div>
+                <div class="hero hero--secondary" aria-hidden="true" data-hero>
+                    <p class="hero__heading"> MAKE GREAT WORK EXPERIENCE </p> 
+                    <br/>
+                </div>
+            </div>
+        <script>
+            const hero = document.querySelector('[data-hero]')
+        
+            window.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e
+            const x = Math.round((clientX / window.innerWidth) * 100)
+            const y = Math.round((clientY / window.innerHeight) * 100)
+                
+                hero.style.setProperty('--x', `${x}%`)
+                hero.style.setProperty('--y', `${y}%`)
+            })
+        </script> 
     <script src="http s://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
