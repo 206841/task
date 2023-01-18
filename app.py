@@ -55,7 +55,7 @@ def validation():
     if request.method=="POST":
         
         print(request.form)
-        user=session['id']
+        user=session['user']
         user=request.form['user']
         cursor=mydb.cursor()
         cursor.execute('SELECT username from admin')
@@ -69,8 +69,8 @@ def validation():
         print(task)
         if (user,) in users:
             if password==task[0]:
-                session['id']=request.form['user']
-                print(session['id'])
+                session['user']=request.form['user']
+                print(session['user'])
                 return redirect(url_for('adminpanel'))
             else:
                 flash('Invalid Password')
@@ -80,7 +80,7 @@ def validation():
             return render_template('adminlogin.html')
 @app.route('/adminlogout')
 def logoutadmin():
-    session.pop('id',None)
+    session.pop('user',None)
     return redirect(url_for('home'))
 @app.route('/adminpanel')
 def adminpanel():
@@ -318,18 +318,13 @@ def update(id1):
         passcode=cursor.fetchone()[0]
         cursor.execute('SELECT admin_email from admin')
         email_from=cursor.fetchone()[0]
-        
-        
         cursor.execute('update task set name=%s,date=%s,assign_to=%s where id=%s',[name2,date2,assign_to2,id1])
-        
-        
         cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
         email_to=cursor.fetchone()[0]
         mydb.commit()
         subject=f'Task is updated'
         body=f'\nYou completed the task with in time'
         cursor.close()
-        
         try:
             mail_sender(email_from,email_to,subject,body,passcode)
             print(mail_sender)
