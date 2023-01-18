@@ -55,7 +55,7 @@ def validation():
     if request.method=="POST":
         
         print(request.form)
-        user=session['user']
+        #user=session['user']
         user=request.form['user']
         cursor=mydb.cursor()
         cursor.execute('SELECT username from admin')
