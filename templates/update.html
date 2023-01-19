@@ -41,7 +41,7 @@
                 <div class="three">
                     <h3 class="good text-center">Updating a Task</h3>
                     {% set var1=id1 %}        
-                    <form method="post">
+                    <form method="POST">
                       <div class="form-row">
                         <div class="col-12">
                           <label for="exampleFormControlInput1">Task-id</label>
@@ -71,16 +71,20 @@
                                 <input type="date" class="form-control"  name="date" value="{{date}}">
                               </div>
                             </div>
-                    </form>
+                    
                     <div class="row grid-3">
                       <div class="col-12 text-right">
                           <div class="row grid-3">
                               <div class="col-12 mt-3 mb-3 text-center" >
-                                <button class="two" style="margin-right:150px;">Submit</button>
+                                <button class="two">Submit</button>
                                 <a href="{{url_for('adminpanel')}}"><button class="two">back</button></a>
                               </div>
+                              
                           </div>
                         </div>
+                    </form>
+                       
+  
             </div>
         </div>
     </div>

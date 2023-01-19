@@ -19,10 +19,10 @@ from email.message import EmailMessage
 import smtplib
 def mail_sender(from_mail,email_to,subject,body,passcode):
         Email_Address=from_mail
-        print(type(from_mail))
-        print(type(email_to))
+        print(from_mail)
+        print(email_to)
         Email_Password=passcode
-        print(type(Email_Password))
+        print(Email_Password)
         msg=EmailMessage()
         msg['Subject']=subject
         msg['From']=Email_Address
