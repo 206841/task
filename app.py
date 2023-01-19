@@ -55,7 +55,7 @@ def validation():
     if request.method=="POST":
         
         print(request.form)
-        #user=session['user']
+        
         user=request.form['user']
         cursor=mydb.cursor()
         cursor.execute('SELECT username from admin')
@@ -304,7 +304,7 @@ def update(id1):
     date=option[0][3]
     cursor.close()
     if request.method=='POST':
-        id1=request.form['id']
+        
         name2=request.form['name']
         assign_to2=request.form['assign_to']
         date2=request.form['date']
@@ -325,7 +325,7 @@ def update(id1):
         mydb.commit()
         subject=f'Task is updated'
         body=f'\nYou completed the task with in time'
-        #cursor.close()
+        cursor.close()
         try:
             mail_sender(email_from,email_to,subject,body,passcode)
             print(mail_sender)
