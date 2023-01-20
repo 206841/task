@@ -4,6 +4,7 @@ from flask_session import Session
 from secretconfig import secret_key
 from py_mail import mail_sender
 from email.message import EmailMessage
+from datetime import date
 import smtplib
 
 
@@ -197,13 +198,13 @@ def addtask():
         id1=request.form['id']
         name=request.form['name']        
         assign_to=request.form['assign_to']
-        duedate=request.form['date']        
-
+        date=request.form['date']        
+        duedate=request.form['duedate']
         cursor=mydb.cursor()
         id2=session.get('id')
         print(id2)
         
-        cursor.execute('insert into task(id,name,assigning,status,assign_to,date) values(%s,%s,%s,%s,%s,%s)',[id1,name,id2,'NOT STARTED',assign_to,duedate])
+        cursor.execute('insert into task(id,name,assigning,status,assign_to,date,duedate) values(%s,%s,%s,%s,%s,%s,%s)',[id1,name,id2,'NOT STARTED',assign_to,date,duedate])
         cursor=mydb.cursor(buffered=True)
         
         cursor.execute('SELECT PASSCODE from admin')
@@ -217,8 +218,8 @@ def addtask():
         cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
         email_to=cursor.fetchone()[0]
         mydb.commit()
-        subject=f'Task is updated'
-        body=f'\n completed the task '
+        subject=f'Due date for task submission {name}'
+        body=f'\n completed the task \n\n\nDue date for submit your work {duedate}'
         cursor.close()
         
         try:
@@ -302,13 +303,14 @@ def update(id1):
     assign_to=option[0][5]
     print(assign_to)
     date=option[0][3]
+    duedate=option[0][6]
     cursor.close()
     if request.method=='POST':
         
         name2=request.form['name']
         assign_to2=request.form['assign_to']
         date2=request.form['date']
-        
+        duedate2=request.form['duedate']
         cursor=mydb.cursor()
         cursor.execute('SELECT assigning,assign_to from task where id=%s',[id1])
         task=cursor.fetchone()
@@ -319,7 +321,7 @@ def update(id1):
         passcode=cursor.fetchone()[0]
         cursor.execute('SELECT admin_email from admin')
         email_from=cursor.fetchone()[0]
-        cursor.execute('update task set name=%s,date=%s,assign_to=%s where id=%s',[name2,date2,assign_to2,id1])
+        cursor.execute('update task set name=%s,date=%s,assign_to=%s,dudate=%s where id=%s',[name2,date2,assign_to2,id1,duedate2])
         cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
         email_to=cursor.fetchone()[0]
         mydb.commit()
