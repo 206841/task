@@ -14,7 +14,7 @@ app.config['MYSQL_HOST'] ='localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD']='anurupa@2002'
 app.config['MYSQL_DB']='task'
-
+mysql=MySQL(app)
 app.secret_key='jgjyfjmgjhymgfnb'
 app.config['SESSION_TYPE']='filesystem'
 
