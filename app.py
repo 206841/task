@@ -13,7 +13,8 @@ mydb=mysql.connector.connect(
     host='localhost',
     user='root',
     password='anurupa@2002',
-    db='task'
+    db='task',
+    auth_plugin='mysql_native_password'
     )
 
 
@@ -51,11 +52,8 @@ def create():
 
 @app.route('/validation',methods=['POST'])
 def validation():
-        
     if request.method=="POST":
-        
         print(request.form)
-        
         user=request.form['user']
         cursor=mydb.cursor()
         cursor.execute('SELECT username from admin')
@@ -96,7 +94,7 @@ def create1():
     re=int(cursor.fetchone()[0])
     cursor.close()
     if request.method=='POST':
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         empid=request.form['employeeid']
         cursor.execute('SELECT employeeid from empolyee')
         task=cursor.fetchall()
@@ -175,7 +173,7 @@ def suggestions():
         name=request.form['name']
         field=request.form['field']
         announcement=request.form['text']
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         cursor.execute('INSERT INTO announcements values(%s,%s,%s,%s)',[emp_id,name,field,announcement])
         mydb.commit()
         return render_template('announcements.html',suggestions=suggestions)
@@ -204,7 +202,7 @@ def addtask():
         print(id2)
         
         cursor.execute('insert into task(id,name,assigning,status,assign_to,date,duedate) values(%s,%s,%s,%s,%s,%s,%s)',[id1,name,id2,'NOT STARTED',assign_to,date,duedate])
-        cursor=mydb.cursor()(buffered=True)
+        cursor=mydb.cursor(buffered=True)
         
         cursor.execute('SELECT PASSCODE from admin')
         passcode=cursor.fetchone()[0]
@@ -293,7 +291,7 @@ def update1():
     return redirect(url_for('update',id1=option1))
 @app.route('/update/<id1>',methods=['GET','POST'])
 def update(id1):
-    cursor=mydb.cursor()(buffered=True)
+    cursor=mydb.cursor(buffered=True)
     cursor.execute('SELECT * FROM task where id=%s',[id1])
     option=cursor.fetchall()
     id1=option[0][0]
@@ -320,23 +318,24 @@ def update(id1):
         passcode=cursor.fetchone()[0]
         cursor.execute('SELECT admin_email from admin')
         email_from=cursor.fetchone()[0]
-        cursor.execute('update task set name=%s,date=%s,assign_to=%s,dudate=%s where id=%s',[name2,date2,assign_to2,id1,duedate2])
+        cursor.execute('update task set name=%s,date=%s,assign_to=%s,duedate=%s where id=%s',[name2,date2,assign_to2,duedate2,id1])
         cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
         email_to=cursor.fetchone()[0]
         mydb.commit()
         subject=f'Task is updated'
-        body=f'\nYou completed the task with in time'
+        body=f'\nYou completed the task with in time due date for your task {duedate}'
         cursor.close()
         try:
             mail_sender(email_from,email_to,subject,body,passcode)
             print(mail_sender)
         except Exception as e:
             print(e)
-            return render_template('check.html')
+            #return render_template('check.html')
         return redirect(url_for('adminpanel'))
     
     return render_template('update.html',name=name,assign_to=assign_to,date=date,id1=id1)
-if __name__ == "__main__":
-        app.run(debug=True)
+app.run(debug=True)
+#if __name__ == "__main__":
+#app.run(debug=True)
 
 
