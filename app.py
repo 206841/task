@@ -9,7 +9,7 @@ import smtplib
 app=Flask(__name__)
 app.secret_key='jgjyfjmgjhymgfnb'
 app.config['SESSION_TYPE']='filesystem'
-mydb=mysql.connector.connect(
+db=mysql.connector.connect(
     host='localhost',
     user='root',
     password='anurupa@2002',
