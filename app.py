@@ -13,8 +13,8 @@ mydb=mysql.connector.connect(
     host='localhost',
     user='root',
     password='anurupa@2002',
-    db='task',
-    auth_plugin='mysql_native_password'
+    db='task'
+    
     )
 
 
