@@ -1,22 +1,21 @@
 from flask import flash,Flask,redirect,render_template,url_for,request,jsonify,session
-from flask_mysqldb import MySQL
+import mysql.connector
 from flask_session import Session
 from secretconfig import secret_key
 from py_mail import mail_sender
 from email.message import EmailMessage
 from datetime import date
 import smtplib
-
-
-
 app=Flask(__name__)
-app.config['MYSQL_HOST'] ='localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD']='anurupa@2002'
-app.config['MYSQL_DB']='task'
-mysql=MySQL(app)
 app.secret_key='jgjyfjmgjhymgfnb'
 app.config['SESSION_TYPE']='filesystem'
+mydb=mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='anurupa@2002',
+    db='task'
+    )
+
 
 
 Session(app)
@@ -28,7 +27,7 @@ def login():
     return render_template('adminlogin.html')
 @app.route('/create',methods=['GET','POST'])
 def create():
-    cursor=mysql.connection.cursor(buffered=True)
+    cursor=mydb.cursor(buffered=True)
     cursor.execute('SELECT count(*) from admin')
     result=int(cursor.fetchone()[0])
     cursor.close()
@@ -44,9 +43,9 @@ def create():
             flash('This Security code is alredy taken by Faculty')
             return render_template('adminlogin.html')
         else:
-            cursor=mysql.connection.cursor()
+            cursor=mydb.cursor()
             cursor.execute('insert into admin values(%s,%s,%s,%s)',[user,password,passcode,admin_email])
-            mysql.connection.commit()
+            mydb.commit()
             return redirect(url_for('home'))
     return render_template('create.html')
 
@@ -58,7 +57,7 @@ def validation():
         print(request.form)
         
         user=request.form['user']
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         cursor.execute('SELECT username from admin')
         users=cursor.fetchall()            
         password=request.form['password']
@@ -85,14 +84,14 @@ def logoutadmin():
     return redirect(url_for('home'))
 @app.route('/adminpanel')
 def adminpanel():
-    cursor=mysql.connection.cursor()
+    cursor=mydb.cursor()
     cursor.execute('SELECT id from task')
     tasks=cursor.fetchall()
     cursor.close()
     return render_template('adminpanel.html',tasks=tasks)
 @app.route('/create1',methods=['GET','POST'])
 def create1():
-    cursor=mysql.connection.cursor()
+    cursor=mydb.cursor()
     cursor.execute('SELECT count(*) from empolyee')
     re=int(cursor.fetchone()[0])
     cursor.close()
@@ -115,9 +114,9 @@ def create1():
         password=request.form['password']
         phone=request.form['phonenumber']
         cursor.close()
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         cursor.execute('insert into empolyee values(%s,%s,%s,%s,%s,%s)',[empid,firstname,lastname,email,password,phone])
-        mysql.connection.commit()
+        mydb.commit()
         return redirect(url_for('home'))
     return render_template('signin.html')
 
@@ -125,7 +124,7 @@ def create1():
 @app.route('/taskemployee',methods=['GET','POST'])
 def taskemployee():
     if session.get('email'):
-        cursor=mysql.connection.cursor(buffered=True)
+        cursor=mydb.cursor(buffered=True)
         cursor.execute('SELECT employeeid  from empolyee where email=%s',[session['email']])
         data=cursor.fetchone()
         id1=data[0]
@@ -143,7 +142,7 @@ def ourteam():
 def employeelogin():
     if request.method=="POST":
         email=request.form['email']
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         cursor.execute('SELECT email from empolyee')
         emails=cursor.fetchall()
         password=request.form['password']
@@ -168,7 +167,7 @@ def logout():
     return redirect(url_for('home'))
 @app.route('/addsuggestion',methods=['GET','POST'])
 def suggestions():
-    cursor=mysql.connection.cursor()
+    cursor=mydb.cursor()
     cursor.execute('SELECT * from announcements')
     suggestions=cursor.fetchall()
     if request.method=="POST":
@@ -178,7 +177,7 @@ def suggestions():
         announcement=request.form['text']
         cursor=mysql.connection.cursor()
         cursor.execute('INSERT INTO announcements values(%s,%s,%s,%s)',[emp_id,name,field,announcement])
-        mysql.connection.commit()
+        mydb.commit()
         return render_template('announcements.html',suggestions=suggestions)
     return render_template('announcements.html')
     
@@ -187,9 +186,9 @@ def delete():
     if request.method=='POST':
         print(request.form)
         s=request.form['option'].split()
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         cursor.execute('delete from task where id=%s',[s[0]])
-        mysql.connection.commit()
+        mydb.commit()
         cursor.close()
         return redirect(url_for('adminpanel'))
 @app.route('/addtask',methods=['GET','POST'])
@@ -200,12 +199,12 @@ def addtask():
         assign_to=request.form['assign_to']
         date=request.form['date']        
         duedate=request.form['duedate']
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         id2=session.get('id')
         print(id2)
         
         cursor.execute('insert into task(id,name,assigning,status,assign_to,date,duedate) values(%s,%s,%s,%s,%s,%s,%s)',[id1,name,id2,'NOT STARTED',assign_to,date,duedate])
-        cursor=mysql.connection.cursor(buffered=True)
+        cursor=mydb.cursor()(buffered=True)
         
         cursor.execute('SELECT PASSCODE from admin')
         passcode=cursor.fetchone()[0]
@@ -217,7 +216,7 @@ def addtask():
         
         cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
         email_to=cursor.fetchone()[0]
-        mysql.connection.commit()
+        mydb.commit()
         subject=f'Due date for task submission {name}'
         body=f'\n completed the task \n\n\nDue date for submit your work {duedate}'
         cursor.close()
@@ -232,7 +231,7 @@ def addtask():
     return render_template('addtask.html')
 @app.route('/viewtask')
 def view():
-    cursor=mysql.connection.cursor()
+    cursor=mydb.cursor()
     cursor.execute('SELECT * from task order by date')
     tasks=cursor.fetchall()
     cursor.close()
@@ -247,9 +246,9 @@ def password():
         email=request.form['email']
         passcode=request.form['p_key']
         if key==secret_key:
-            cursor=mysql.connection.cursor()
+            cursor=mydb.cursor()
             cursor.execute('update admin set password=%s,email=%s,passcode=%s',[password,email,passcode])
-            mysql.connection.commit()
+            mydb.commit()
             cursor.close()
             return redirect(url_for('home'))
         else:
@@ -260,7 +259,7 @@ def changestatus(tid):
     if request.method=='POST':
         option=request.form['option']
         comment=request.form['text']
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         
         cursor.execute('update task set status=%s,comment=%s where id=%s',[option,comment,tid])
         return redirect(url_for('taskemployee'))
@@ -277,9 +276,9 @@ def password1():
         email=request.form['email']
         password=request.form['password']
         if key==secret_key:
-            cursor=mysql.connection.cursor()
+            cursor=mydb.cursor()
             cursor.execute('update empolyee set password=%s,email=%s',[password,email])
-            mysql.connection.commit()
+            mydb.commit()
             cursor.close()
             return redirect(url_for('home'))
         else:
@@ -294,7 +293,7 @@ def update1():
     return redirect(url_for('update',id1=option1))
 @app.route('/update/<id1>',methods=['GET','POST'])
 def update(id1):
-    cursor=mysql.connection.cursor(buffered=True)
+    cursor=mydb.cursor()(buffered=True)
     cursor.execute('SELECT * FROM task where id=%s',[id1])
     option=cursor.fetchall()
     id1=option[0][0]
@@ -311,11 +310,11 @@ def update(id1):
         assign_to2=request.form['assign_to']
         date2=request.form['date']
         duedate2=request.form['duedate']
-        cursor=mysql.connection.cursor()
+        cursor=mydb.cursor()
         cursor.execute('SELECT assigning,assign_to from task where id=%s',[id1])
         task=cursor.fetchone()
     
-        cursor=mysql.connection.cursor(buffered=True)
+        cursor=mydb.cursor(buffered=True)
         
         cursor.execute('SELECT PASSCODE from admin')
         passcode=cursor.fetchone()[0]
@@ -324,7 +323,7 @@ def update(id1):
         cursor.execute('update task set name=%s,date=%s,assign_to=%s,dudate=%s where id=%s',[name2,date2,assign_to2,id1,duedate2])
         cursor.execute('SELECT email from empolyee where employeeid=%s',[assign_to])
         email_to=cursor.fetchone()[0]
-        mysql.connection.commit()
+        mydb.commit()
         subject=f'Task is updated'
         body=f'\nYou completed the task with in time'
         cursor.close()
